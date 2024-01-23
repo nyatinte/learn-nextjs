@@ -3,6 +3,7 @@ import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchCustomers, fetchInvoiceById } from '@/app/lib/data';
 import { NextPage } from 'next';
 import { promise } from 'zod';
+import { notFound } from 'next/navigation';
 
 export default async function Page({
   params,
@@ -17,6 +18,10 @@ export default async function Page({
     fetchInvoiceById(id),
     fetchCustomers(),
   ]);
+
+  if (!invoice) {
+    notFound();
+  }
   return (
     <main>
       <Breadcrumbs
